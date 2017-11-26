@@ -1,5 +1,5 @@
 # PiEye
-PiEye is a C++11 library providing fast and easy access to the Raspberry Pi camera using OpenCV. The library uses the camera's MMAL interface to cummincate.
+PiEye is a C++11 library providing fast and easy access to the Raspberry Pi camera using OpenCV. The library uses the camera's MMAL interface to communicate.
 
 Credits go to [RaspiCam] and the Raspberry Pi [raspivid and raspistill] programs, serving as an inspiration for this library.
 
