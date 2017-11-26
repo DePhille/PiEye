@@ -1,4 +1,4 @@
-MIT License
+/* MIT License
 
 Copyright (c) 2017 Philippe Beckers
 
@@ -19,3 +19,32 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#include "BufferLock.h"
+
+#include <interface/mmal/mmal.h>
+#include "PiEyeException.hpp"
+#include "Log.hpp"
+
+BufferLock::BufferLock(MMAL_BUFFER_HEADER_T* buffer) {
+    EZLOG_TRACE("Locking buffer");
+    const MMAL_STATUS_T status = mmal_buffer_header_mem_lock(buffer);
+    if (status == MMAL_SUCCESS) {
+        _buffer = buffer;
+    } else {
+        throw PiEyeException("Unable to lock buffer");
+    }
+}
+
+BufferLock::~BufferLock() {
+    unlock();
+}
+
+void
+BufferLock::unlock() {
+    if (_buffer != nullptr) {
+        EZLOG_TRACE("Unlocking buffer");
+        mmal_buffer_header_mem_unlock(_buffer);
+        _buffer = nullptr;
+    }
+}

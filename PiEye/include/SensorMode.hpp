@@ -1,4 +1,4 @@
-MIT License
+/* MIT License
 
 Copyright (c) 2017 Philippe Beckers
 
@@ -19,3 +19,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#pragma once
+
+// https://www.raspberrypi.org/documentation/raspbian/applications/camera.md
+enum SensorMode {       // Resolution   Aspect Ratio    FPS     FoV         Binning
+    V2_AUTO = 0,        // Automatic
+    V2_HD1080P = 1,     // 1920x1080    16:9            0.1-30  Partial     None
+    V2_8MP = 2,         // 3280x2464    4:3             0.1-15  Full        None
+    V2_8MP2 = 3,        // 3280x2464    4:3             0.1-15  Full        None
+    V2_BINNED_43 = 4,   // 1640x1232    4:3             0.1-40  Full        2x2
+    V2_BINNED_169 = 5,  // 1640x922     16:9            0.1-40  Full        2x2
+    V2_HD720P = 6,      // 1280x720     16:9            40-90   Partial     2x2
+    V2_480P = 7         // 640x480      4:3             40-90   Partial     2x2
+};

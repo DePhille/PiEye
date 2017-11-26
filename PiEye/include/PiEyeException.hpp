@@ -1,4 +1,4 @@
-MIT License
+/* MIT License
 
 Copyright (c) 2017 Philippe Beckers
 
@@ -19,3 +19,38 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#pragma once
+
+#include <stdexcept>
+#include <interface/mmal/mmal_types.h>
+
+/**
+ * Used so that clients have the option to catch all exceptions coming from this library.
+ */
+class PiEyeException : public std::runtime_error {
+public:
+    PiEyeException(const std::string& message) : std::runtime_error(message) {
+    }
+};
+
+class StatusException : public PiEyeException {
+public:
+    StatusException(const MMAL_STATUS_T& status, const std::string& message) : PiEyeException(message), _status(status) {
+    }
+    
+private:
+    const MMAL_STATUS_T _status;
+};
+
+class StateException : public PiEyeException {
+public:
+	StateException(const std::string& message) : PiEyeException(message) {
+	}
+};
+
+class TimeOutException : public PiEyeException {
+public:
+	TimeOutException(const std::string& message) : PiEyeException(message) {
+	}
+};

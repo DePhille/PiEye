@@ -1,4 +1,4 @@
-MIT License
+/* MIT License
 
 Copyright (c) 2017 Philippe Beckers
 
@@ -19,3 +19,49 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#include "Wait.h"
+
+#include <mutex>
+#include <condition_variable>
+
+#include "PiEyeException.hpp"
+#include "Log.hpp"
+
+Wait::Wait() : _mutex(new std::mutex()), _condition(new std::condition_variable()) {
+}
+
+Wait::~Wait() {
+	if (_mutex) {
+		delete _mutex;
+		_mutex = nullptr;
+	}
+	
+	if (_condition) {
+		delete _condition;
+		_condition = nullptr;
+	}
+}
+
+void
+Wait::wait(unsigned short seconds) {
+	EZLOG_TRACE("Waiting...");
+	std::unique_lock<std::mutex> lock(*_mutex);
+	_wait = true;
+	
+	while(_wait) {
+		if (_condition->wait_for(lock, std::chrono::seconds(seconds)) == std::cv_status::timeout) {
+			throw TimeOutException("Time out occurred");
+		}
+	}
+	EZLOG_TRACE("Done waiting");
+}
+
+void
+Wait::notify() {
+	EZLOG_TRACE("Notifying");
+	std::unique_lock<std::mutex> lock(*_mutex);
+	_wait = false;
+	_condition->notify_all();
+	EZLOG_TRACE("Notified");
+}

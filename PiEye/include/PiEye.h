@@ -1,4 +1,4 @@
-MIT License
+/* MIT License
 
 Copyright (c) 2017 Philippe Beckers
 
@@ -19,3 +19,74 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#pragma once
+
+#include "SensorMode.hpp"
+#include "Encoding.hpp"
+#include "AwbMode.hpp"
+
+namespace cv {
+    class Mat;
+}
+
+class PiEyeImpl;
+
+class PiEye {
+public:
+
+    PiEye();
+    ~PiEye();
+
+    void
+    createCamera();
+    
+    void
+    destroyCamera();
+	
+	void
+	startVideo();
+	
+	void
+	stopVideo();
+	
+	void
+	grabFrame(cv::Mat& data);
+    
+    void
+    grabStill(cv::Mat& data);
+    
+    void
+    setSensorMode(const SensorMode mode);
+	
+	void
+	setEncoding(const Encoding& encoding);
+	
+	const Encoding&
+	getEncoding() const;
+	
+	void
+	setShutterSpeed(unsigned short millis);
+
+    void
+    setIso(unsigned short iso);
+    
+    void
+    setAnalogGain(float gain);
+    
+    void
+    setDigitalGain(float gain);
+	
+	void
+	setWhiteBalanceMode(const AwbMode& mode);
+    
+    void
+    setWhiteBalanceGain(float redGain, float blueGain);
+    
+    void
+    setFpsRange(float minFps, float maxFps);
+
+private:
+    PiEyeImpl* _impl;
+
+};
