@@ -24,6 +24,8 @@ SET (PIEYE_INCLUDE
 	include/PiEye.h
 	include/PiEyeException.hpp
 	include/SensorMode.hpp
+    include/AwbMode.hpp
+    include/Encoding.hpp
 )
 SET_TARGET_PROPERTIES(PiEye PROPERTIES PUBLIC_HEADER "${PIEYE_INCLUDE}")
 INSTALL(TARGETS PiEye
