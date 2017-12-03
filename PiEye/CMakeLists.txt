@@ -20,6 +20,7 @@ TARGET_COMPILE_DEFINITIONS(PiEye PRIVATE EZLOG_LEVEL=${PIEYE_LOG_LEVEL})
 ###################################################################################################
 SET (PIEYE_INCLUDE
 	include/EzLogger.h
+	include/EzMessage.h
 	include/Log.hpp
 	include/PiEye.h
 	include/PiEyeException.hpp
